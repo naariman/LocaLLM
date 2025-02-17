@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  LocaLLM
+
+  Created by rbkusser on 15.02.2025.
+  
+*/
+
+"authorization.continueWithGoogleButton" = "Продолжить с Google";
+"authorization.continueWithAppleButton" = "Продолжить с Apple";
