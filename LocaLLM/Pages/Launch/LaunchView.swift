@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LaunchPage: View {
+struct LaunchView: View {
 
     @Binding var showLaunchPage: Bool
 

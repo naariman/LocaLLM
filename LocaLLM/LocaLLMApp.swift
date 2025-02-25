@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 import FirebaseCore
 
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -26,15 +27,18 @@ struct LocaLLMApp: App {
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
+    @StateObject private var commonStore = CommonStore()
+
     @State private var showLaunchPage = true
 
     var body: some Scene {
         WindowGroup {
             ZStack {
-                ContentView()
+                ChatView()
+                    .environmentObject(commonStore)
 
                 if showLaunchPage {
-                    LaunchPage(showLaunchPage: $showLaunchPage)
+                    LaunchView(showLaunchPage: $showLaunchPage)
                 }
             }
         }

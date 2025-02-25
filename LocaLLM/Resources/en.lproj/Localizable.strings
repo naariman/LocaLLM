@@ -6,5 +6,23 @@
   
 */
 
+"mock" = "Example";
+
+"common.connectionAvailable" = "Connected";
+"common.connectionUnavailable" = "Not connected";
+"common.save" = "Save";
+
 "authorization.continueWithGoogleButton" = "Continue with Google";
 "authorization.continueWithAppleButton" = "Continue with Apple";
+
+"llmSettings.title" = "Model settings";
+"llmSettings.subtitle" = "New modifiers will be available soon";
+"llmSettings.urlPlaceholder" = "Enter the URL";
+"llmSettings.modelText" = "Select an available model";
+
+"llmSettings.empty.title" = "No Models Available";
+"llmSettings.empty.subtitle" = "It looks like there are no models to display. Please add a new model on your server and reenter URL.";
+
+"llmSettings.selectedModel" = "Selected model";
+
+"chat.messagePlaceholder" = "Message LocaLLM";
