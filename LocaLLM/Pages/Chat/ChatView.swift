@@ -15,11 +15,21 @@ struct ChatView: View {
     @State private var showRightSideMenu = false
     @State private var showExapndedTextField = false
 
+    @FocusState private var focusedField: FocusedField?
+
     var body: some View {
         NavigationStack {
             VStack {
                 Spacer()
-                ChatTextField(text: $viewModel.message, primaryButtonAction: {}, expandButtonAction: {})
+                ChatInputView(
+                    text: $viewModel.message,
+                    primaryButtonAction: {
+                    },
+                    expandButtonAction: {
+                        showExapndedTextField.toggle()
+                    }
+                )
+                .focused($focusedField, equals: .textField)
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -45,13 +55,28 @@ struct ChatView: View {
             .sheet(isPresented: $showLLMSettingsView) {
                 LLMSettingsView()
             }
+            .sheet(isPresented: $showExapndedTextField) {
+                ExapndedTextField(text: $viewModel.message)
+            }
             .onAppear {
                 let name: String? = UserDefaultsStore().getValue(for: .llmSettingsName)
                 let url: String? = UserDefaultsStore().getValue(for: .llmSettingsUrl)
                 print("model name: \(String(describing: name))")
                 print("model url: \(String(describing: url))")
+
+                focusedField = .textField
             }
         }
+        .onTapGesture {
+            focusedField = nil
+        }
+    }
+}
+
+extension ChatView {
+
+    enum FocusedField {
+        case textField
     }
 }
 

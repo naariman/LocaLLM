@@ -7,32 +7,28 @@
 
 import SwiftUI
 
-struct ChatTextField: View {
+struct ChatInputView: View {
 
     @Binding var text: String
+
     var primaryButtonAction: () -> ()
     var expandButtonAction: () -> ()
     var isPrimaryButtonHidden: Bool = false
 
     var body: some View {
         VStack {
+            Divider()
             TextField(text: $text, axis: .vertical) {
                 Text(LocalizedStringKey("chat.messagePlaceholder"))
             }
-            .padding(12)
-            .lineLimit(3)
+            .padding(8)
+            .lineLimit(9)
 
             supportView
         }
-        .background(
-            UnevenRoundedRectangle(
-                cornerRadii: RectangleCornerRadii(
-                    topLeading: 16,
-                    topTrailing: 16
-                )
-            )
-            .stroke(.secondary)
-        )
+        .overlay {
+
+        }
     }
 
     private var supportView: some View {
@@ -70,7 +66,7 @@ struct ChatTextField: View {
 }
 
 #Preview {
-    ChatTextField(
+    ChatInputView(
         text: .constant(""),
         primaryButtonAction: {},
         expandButtonAction: {}
