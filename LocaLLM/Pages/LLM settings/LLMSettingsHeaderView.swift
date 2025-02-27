@@ -21,13 +21,7 @@ struct LLMSettingsHeaderView: View {
 
                 Spacer()
 
-                Button {
-                    closeButtonAction()
-                } label: {
-                    Image(systemName: "xmark")
-                        .tint(.black)
-                        .padding(8)
-                }
+                Button(LocalizedStringKey("llmSettings.save"), action: closeButtonAction)
             }
 
             Text(LocalizedStringKey("llmSettings.subtitle"))

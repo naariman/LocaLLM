@@ -1,0 +1,33 @@
+//
+//  UserMessageView.swift
+//  LocaLLM
+//
+//  Created by rbkusser on 25.02.2025.
+//
+
+import SwiftUI
+
+struct UserMessageRow: View {
+
+    let message: ChatModel.Message
+
+    var body: some View {
+        HStack {
+            Spacer()
+
+            Text(message.content)
+                .padding(8)
+                .background(.lightGray)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+        }
+    }
+}
+
+#Preview {
+    UserMessageRow(
+        message: ChatModel.Message(
+            role: .assistant,
+            content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        )
+    )
+}

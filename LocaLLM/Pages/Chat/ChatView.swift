@@ -20,16 +20,51 @@ struct ChatView: View {
     var body: some View {
         NavigationStack {
             VStack {
+
+                ScrollViewReader { proxy in
+
+                    if let messages = viewModel.chatModel?.request.messages {
+                        List{
+                            ForEach(messages, id: \.self) { message in
+                                if message.role == .user {
+                                    UserMessageRow(message: message)
+                                        .listRowSeparator(.hidden)
+                                        .listRowInsets(EdgeInsets(top: 16, leading: 0, bottom: 4, trailing: 0))
+                                }
+                                else {
+                                    AssistantMessageRow(message: message)
+                                        .listRowSeparator(.hidden)
+                                        .listRowInsets(EdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 0))
+                                }
+                            }
+                        }
+                        .scrollContentBackground(.hidden)
+                        .onChange(of: viewModel.chatModel?.request.messages) {
+                            withAnimation {
+                                proxy.scrollTo(viewModel.chatModel?.request.messages.last)
+                            }
+                        }
+                    }
+
+                }
+
                 Spacer()
+
                 ChatInputView(
                     text: $viewModel.message,
                     primaryButtonAction: {
+                        Task {
+                            await viewModel.sendMessage()
+                        }
                     },
                     expandButtonAction: {
                         showExapndedTextField.toggle()
                     }
                 )
                 .focused($focusedField, equals: .textField)
+            }
+            .onTapGesture {
+                focusedField = nil
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -59,16 +94,8 @@ struct ChatView: View {
                 ExapndedTextField(text: $viewModel.message)
             }
             .onAppear {
-                let name: String? = UserDefaultsStore().getValue(for: .llmSettingsName)
-                let url: String? = UserDefaultsStore().getValue(for: .llmSettingsUrl)
-                print("model name: \(String(describing: name))")
-                print("model url: \(String(describing: url))")
-
                 focusedField = .textField
             }
-        }
-        .onTapGesture {
-            focusedField = nil
         }
     }
 }

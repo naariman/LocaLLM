@@ -25,4 +25,6 @@
 
 "llmSettings.selectedModel" = "Selected model";
 
+"llmSettings.save" = "Save";
+
 "chat.messagePlaceholder" = "Message LocaLLM";

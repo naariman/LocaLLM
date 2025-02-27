@@ -71,9 +71,10 @@ extension LLMSettingsViewModel {
         }
     }
 
-    func onDisappear() {
+    func didTapSave(completion: () -> ()) {
         userDefaultsStore.set(value: urlString, for: .llmSettingsUrl)
         userDefaultsStore.set(value: selectedModel?.name ?? "", for: .llmSettingsName)
+        completion()
     }
 }
 

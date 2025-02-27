@@ -10,31 +10,30 @@ import Foundation
 struct ChatModel {
 
     var request: ChatModel.Request
-    var response: ChatModel.Response
+    var response: ChatModel.Response?
 }
 
 extension ChatModel {
 
-    struct Request {
-        let model: String
-        let messages: [ChatModel.Message]
+    struct Request: Encodable {
+        var model: String
+        var messages: [ChatModel.Message]
         let stream: Bool = false
     }
 
-    struct Response {
+    struct Response: Decodable {
         let message: ChatModel.Message
     }
 }
 
 extension ChatModel {
 
-    struct Message {
+    struct Message: Codable, Hashable {
         let role: ChatRole
         let content: String
-
     }
 
-    enum ChatRole: String {
+    enum ChatRole: String, Codable {
         case user
         case assistant
     }

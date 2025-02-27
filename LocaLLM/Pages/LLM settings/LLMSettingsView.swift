@@ -22,7 +22,11 @@ struct LLMSettingsView: View {
             LLMSettingsHeaderView(
                 title: LocalizedStringKey("llmSettings.title"),
                 subtitle: LocalizedStringKey("llmSettings.subtitle"),
-                closeButtonAction: { dismiss() }
+                closeButtonAction: {
+                    viewModel.didTapSave {
+                        dismiss()
+                    }
+                }
             )
 
             LLMSettingsTextField(
@@ -48,9 +52,6 @@ struct LLMSettingsView: View {
         }
         .padding(.horizontal, 16)
         .padding(.top, 20)
-        .onDisappear { [weak viewModel] in
-            viewModel?.onDisappear()
-        }
     }
 }
 
