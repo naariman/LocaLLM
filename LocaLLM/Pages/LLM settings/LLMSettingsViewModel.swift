@@ -26,7 +26,7 @@ class LLMSettingsViewModel: ObservableObject {
     var models: [LLMModel]
 
     init() {
-        self.urlString = userDefaultsStore.getValue(for: .llmSettingsUrl) ?? ""
+        self.urlString = userDefaultsStore.getValue(for: .llmUrl) ?? ""
         self.selectedModel = nil
         self.state = .notEntered
         self.models = []
@@ -43,7 +43,7 @@ extension LLMSettingsViewModel {
                 if let models = response?.models {
                     self.models = models
 
-                    let savedModelName: String? = userDefaultsStore.getValue(for: .llmSettingsName)
+                    let savedModelName: String? = userDefaultsStore.getValue(for: .llmName)
                     selectedModel = models.first(where: { $0.name == savedModelName })
                 }
             }
@@ -72,8 +72,8 @@ extension LLMSettingsViewModel {
     }
 
     func didTapSave(completion: () -> ()) {
-        userDefaultsStore.set(value: urlString, for: .llmSettingsUrl)
-        userDefaultsStore.set(value: selectedModel?.name ?? "", for: .llmSettingsName)
+        userDefaultsStore.set(value: urlString, for: .llmUrl)
+        userDefaultsStore.set(value: selectedModel?.name ?? "", for: .llmName)
         completion()
     }
 }

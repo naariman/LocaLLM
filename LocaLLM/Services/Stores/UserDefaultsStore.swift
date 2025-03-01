@@ -11,8 +11,8 @@ class UserDefaultsStore {
 
     enum Key: String {
 
-        case llmSettingsUrl
-        case llmSettingsName
+        case llmUrl
+        case llmName
     }
 
     private let userDefaults = UserDefaults()

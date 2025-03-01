@@ -10,7 +10,6 @@ import SwiftUI
 struct LLMSettingsView: View {
 
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.modelContext) private var context
     @ObservedObject var viewModel: LLMSettingsViewModel
 
     init() {

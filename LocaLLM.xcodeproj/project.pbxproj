@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		9F362C5D2D60E95300DBD437 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9F362C5C2D60E95300DBD437 /* FirebaseCore */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		9F362C462D60BE7300DBD437 /* LocaLLM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocaLLM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -40,7 +36,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F362C5D2D60E95300DBD437 /* FirebaseCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,7 +86,6 @@
 			);
 			name = LocaLLM;
 			packageProductDependencies = (
-				9F362C5C2D60E95300DBD437 /* FirebaseCore */,
 			);
 			productName = LocaLLM;
 			productReference = 9F362C462D60BE7300DBD437 /* LocaLLM.app */;
@@ -123,7 +117,6 @@
 			mainGroup = 9F362C3D2D60BE7300DBD437;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				9F362C5A2D60E8F200DBD437 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9F362C472D60BE7300DBD437 /* Products */;
@@ -367,25 +360,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		9F362C5A2D60E8F200DBD437 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.8.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		9F362C5C2D60E95300DBD437 /* FirebaseCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9F362C5A2D60E8F200DBD437 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCore;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9F362C3E2D60BE7300DBD437 /* Project object */;
 }

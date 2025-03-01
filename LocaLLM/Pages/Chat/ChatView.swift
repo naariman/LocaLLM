@@ -23,29 +23,28 @@ struct ChatView: View {
 
                 ScrollViewReader { proxy in
 
-                    if let messages = viewModel.chatModel?.request.messages {
-                        List{
-                            ForEach(messages, id: \.self) { message in
-                                if message.role == .user {
-                                    UserMessageRow(message: message)
-                                        .listRowSeparator(.hidden)
-                                        .listRowInsets(EdgeInsets(top: 16, leading: 0, bottom: 4, trailing: 0))
-                                }
-                                else {
-                                    AssistantMessageRow(message: message)
-                                        .listRowSeparator(.hidden)
-                                        .listRowInsets(EdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 0))
-                                }
+                    List{
+                        ForEach(viewModel.messages, id: \.self) { message in
+                            if message.role == .user {
+                                UserMessageRow(message: message)
+                                    .listRowSeparator(.hidden)
+                                    .listRowInsets(EdgeInsets(top: 16, leading: 0, bottom: 4, trailing: 0))
+                                    .id(message.id)
                             }
-                        }
-                        .scrollContentBackground(.hidden)
-                        .onChange(of: viewModel.chatModel?.request.messages) {
-                            withAnimation {
-                                proxy.scrollTo(viewModel.chatModel?.request.messages.last)
+                            else {
+                                AssistantMessageRow(message: message)
+                                    .listRowSeparator(.hidden)
+                                    .listRowInsets(EdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 0))
+                                    .id(message.id)
                             }
                         }
                     }
-
+                    .scrollContentBackground(.hidden)
+                    .onChange(of: viewModel.messages) {
+                        withAnimation {
+                            proxy.scrollTo(viewModel.messages.last?.id)
+                        }
+                    }
                 }
 
                 Spacer()
@@ -69,7 +68,7 @@ struct ChatView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        
+                        showRightSideMenu.toggle()
                     }
                     label: {
                         Image(systemName: "line.3.horizontal")
@@ -99,6 +98,7 @@ struct ChatView: View {
         }
     }
 }
+
 
 extension ChatView {
 

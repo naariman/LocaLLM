@@ -11,27 +11,20 @@ class ChatViewModel: ObservableObject {
 
     private var userDefaults = UserDefaultsStore()
 
-    @Published var chatModel: ChatModel?
-
-    @Published var text: String = ""
-
-    var urlString: String?
+    private var requestData: ChatRequest?
+    private var urlString: String? = "http://localhost:11434/api/chat"
 
     @Published var message: String = ""
+    @Published var messages: [ChatMessage] = []
 
     init() {
         guard
-            let urlString: String = userDefaults.getValue(for: .llmSettingsUrl),
-            let modelName: String = userDefaults.getValue(for: .llmSettingsName) else {
+            let urlString: String = userDefaults.getValue(for: .llmUrl),
+            let modelName: String = userDefaults.getValue(for: .llmName) else {
             return
         }
 
-        chatModel = ChatModel(request: ChatModel.Request(model: "llama3.1", messages: []))
-        self.urlString = "http://localhost:11434/api/chat"
-    }
-
-    func messages() -> [ChatModel.Message] {
-        chatModel?.request.messages ?? []
+        requestData = ChatRequest(model: "llama3.1", messages: [])
     }
 
     func sendMessage() async {
@@ -40,15 +33,11 @@ class ChatViewModel: ObservableObject {
             return
         }
 
-        let newMessage = ChatModel.Message(role: .user, content: message)
+        let newMessage = ChatMessage(role: .user, content: message)
         await MainActor.run {
-            chatModel?.request.messages.append(newMessage)
+            requestData?.messages.append(newMessage)
+            messages.append(newMessage)
         }
-
-        let requestObject = ChatModel.Request(
-            model: chatModel!.request.model,
-            messages: chatModel!.request.messages
-        )
 
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -56,7 +45,7 @@ class ChatViewModel: ObservableObject {
 
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
-        let encodedData = try? encoder.encode(requestObject)
+        let encodedData = try? encoder.encode(requestData)
         request.httpBody = encodedData
 
         if let encodedData = encodedData,
@@ -73,9 +62,10 @@ class ChatViewModel: ObservableObject {
             }
 
             let decoder = JSONDecoder()
-            let decodedData = try decoder.decode(ChatModel.Response.self, from: data)
+            let decodedData = try decoder.decode(ChatResponse.self, from: data)
             await MainActor.run {
-                chatModel?.request.messages.append(decodedData.message)
+                messages.append(decodedData.message)
+                requestData?.messages.append(decodedData.message)
             }
         }
         catch(let error) {
