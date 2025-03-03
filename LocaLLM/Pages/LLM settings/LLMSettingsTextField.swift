@@ -17,41 +17,46 @@ struct LLMSettingsTextField: View {
     var onChange: () -> ()
 
     var body: some View {
-        TextField(placeholder, text: $text)
-            .textInputAutocapitalization(.none)
-            .tint(.black)
-            .autocorrectionDisabled()
-            .padding(.vertical, 12)
-            .padding(.horizontal, 16)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(borderColor(for: state), lineWidth: 1)
-            )
-            .overlay(
-                HStack {
-                    Spacer()
+        VStack(alignment: .leading) {
+            TextField(placeholder, text: $text)
+                .textContentType(.none)
+                .minimumScaleFactor(0.5)
+                .textInputAutocapitalization(.none)
+                .tint(.black)
+                .autocorrectionDisabled()
+                .padding(.vertical, 12)
+                .padding(.leading, 16)
+                .padding(.trailing, 34)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(borderColor(for: state), lineWidth: 1)
+                )
+                .shadow(radius: 10)
+                .overlay(
+                    HStack {
+                        Spacer()
 
-                    switch state {
-                    case .notEntered:
-                        VStack {}
-                    case .loading:
-                        ProgressView()
-                            .padding(.trailing, 16)
-                    case .success:
-                        Image(systemName: "checkmark.circle.fill")
-                            .foregroundColor(.green)
-                            .padding(.trailing, 16)
-                    case .failure:
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.red)
-                            .padding(.trailing, 16)
+                        switch state {
+                        case .notEntered:
+                            VStack {}
+                        case .loading:
+                            ProgressView()
+                                .padding(.trailing, 16)
+                        case .success:
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.green)
+                                .padding(.trailing, 16)
+                        case .failure:
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundColor(.red)
+                                .padding(.trailing, 16)
+                        }
                     }
+                )
+                .onChange(of: text) {
+                    onChange()
                 }
-            )
-            .shadow(radius: 10)
-            .onChange(of: text) {
-                onChange()
-            }
+        }
     }
 
 

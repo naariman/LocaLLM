@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUICore
 
 class LLMSettingsViewModel: ObservableObject {
 
@@ -17,63 +16,44 @@ class LLMSettingsViewModel: ObservableObject {
         case failure
     }
 
-    private let userDefaultsStore = UserDefaultsStore()
-
-    @Published var state: State
-    @Published var selectedModel: LLMModel?
+    @Published var state: State = .loading
+    @Published var selectedModel: LLMModel? = nil
     @Published var urlString: String
 
-    var models: [LLMModel]
+    private let userDefaultsService = UserDefaultsService()
+    private let networkService = NetworkService()
+    private let llmService = LLMService()
+
+    var models: [LLMModel] = []
 
     init() {
-        self.urlString = userDefaultsStore.getValue(for: .llmUrl) ?? ""
-        self.selectedModel = nil
-        self.state = .notEntered
-        self.models = []
+        urlString = userDefaultsService.getValue(for: .llmUrl) ?? ""
+        fetchModels()
     }
 }
 
 extension LLMSettingsViewModel {
 
     func fetchModels() {
-        Task {
-            let (state, response) = await processFetchModels(urlString: urlString)
-            await MainActor.run {
-                self.state = state
-                if let models = response?.models {
-                    self.models = models
+        Task { @MainActor in
+            state = .loading
 
-                    let savedModelName: String? = userDefaultsStore.getValue(for: .llmName)
-                    selectedModel = models.first(where: { $0.name == savedModelName })
-                }
+            do {
+                let repsonse: LLMModelsResponse = try await networkService.request(urlString: urlString, method: .GET)
+                models = repsonse.models
+                state = .success(isModelsEmpty: repsonse.models.isEmpty)
+
+                let savedModelName: String? = userDefaultsService.getValue(for: .llmName)
+                selectedModel = models.first(where: { $0.name == savedModelName })
+            } catch {
+                state = .failure
             }
-        }
-    }
-
-    private func processFetchModels(urlString: String) async -> (state: State, response: LLMModelsResponse?) {
-        guard let url = URL(string: urlString) else {
-            return (State.failure, nil)
-        }
-
-        do {
-            let (data, response) = try await URLSession.shared.data(from: url)
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                return (State.failure, nil)
-            }
-
-            let decoder = JSONDecoder()
-            let decodedResponse = try decoder.decode(LLMModelsResponse.self, from: data)
-
-            return (State.success(isModelsEmpty: decodedResponse.models.isEmpty), decodedResponse)
-        }
-        catch {
-            return (State.failure, nil)
         }
     }
 
     func didTapSave(completion: () -> ()) {
-        userDefaultsStore.set(value: urlString, for: .llmUrl)
-        userDefaultsStore.set(value: selectedModel?.name ?? "", for: .llmName)
+        guard let name = selectedModel?.name else { return }
+        llmService.save(modelName: name, baseUrl: urlString)
         completion()
     }
 }

@@ -9,12 +9,9 @@ import SwiftUI
 
 struct LLMSettingsView: View {
 
-    @Environment(\.dismiss) private var dismiss
-    @ObservedObject var viewModel: LLMSettingsViewModel
+    @ObservedObject var viewModel = LLMSettingsViewModel()
 
-    init() {
-        viewModel = LLMSettingsViewModel()
-    }
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
@@ -22,9 +19,7 @@ struct LLMSettingsView: View {
                 title: LocalizedStringKey("llmSettings.title"),
                 subtitle: LocalizedStringKey("llmSettings.subtitle"),
                 closeButtonAction: {
-                    viewModel.didTapSave {
-                        dismiss()
-                    }
+                    viewModel.didTapSave { dismiss() }
                 }
             )
 
@@ -51,6 +46,10 @@ struct LLMSettingsView: View {
         }
         .padding(.horizontal, 16)
         .padding(.top, 20)
+
+        .onAppear {
+            viewModel.fetchModels()
+        }
     }
 }
 

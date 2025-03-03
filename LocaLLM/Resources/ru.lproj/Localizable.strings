@@ -15,15 +15,13 @@
 "authorization.continueWithGoogleButton" = "Продолжить с Google";
 "authorization.continueWithAppleButton" = "Продолжить с Apple";
 
-"chat.enterUrl" = "Введите ваш URL";
+"llmSettings.title" = "Настройки модели";
 "llmSettings.subtitle" = "Новые модификаторы скоро будут доступны.";
 "llmSettings.urlPlaceholder" = "Введите URL";
 "llmSettings.modelText" = "Выберите доступные модели";
 "llmSettings.empty.title" = "Нет доступных моделей";
 "llmSettings.empty.subtitle" = "Похоже, нет моделей для отображения. Пожалуйста, добавьте новую модель на ваш сервер и введите URL снова.";
-
 "llmSettings.selectedModel" = "Выбранная модель";
-
 "llmSettings.save" = "Сохранить";
 
 "chat.messagePlaceholder" = "Спросите LocaLLM";

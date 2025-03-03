@@ -52,9 +52,7 @@ struct ChatView: View {
                 ChatInputView(
                     text: $viewModel.message,
                     primaryButtonAction: {
-                        Task {
-                            await viewModel.sendMessage()
-                        }
+                        viewModel.sendMessage()
                     },
                     expandButtonAction: {
                         showExapndedTextField.toggle()

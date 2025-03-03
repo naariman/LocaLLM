@@ -9,23 +9,25 @@ import SwiftUI
 
 struct HistorySideMenu: View {
 
-    var edgeTransition = AnyTransition(.move(edge: .leading))
+    @Binding var isShowing: Bool
 
     var body: some View {
-        Form {
-            Text("hrllo")
-            Text("hrllo")
-            Text("hrllo")
-            Text("hrllo")
-            Text("hrllo")
-            Text("hrllo")
-            Text("hrllo")
-            Text("hrllo")
-            Text("hrllo")
+        ZStack {
+
+            if isShowing {
+                Color.black
+                    .opacity(0.3)
+                    .onTapGesture { isShowing.toggle() }
+            }
+
+            Form {
+                Text("some text")
+                Text("some text")
+                Text("some text")
+                Text("some text")
+            }
+            .transition(AnyTransition(.move(edge: .leading)))
+            .animation(.easeInOut, value: isShowing)
         }
     }
-}
-
-#Preview {
-    HistorySideMenu()
 }
