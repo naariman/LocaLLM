@@ -23,5 +23,6 @@
 "llmSettings.empty.subtitle" = "Похоже, нет моделей для отображения. Пожалуйста, добавьте новую модель на ваш сервер и введите URL снова.";
 "llmSettings.selectedModel" = "Выбранная модель";
 "llmSettings.save" = "Сохранить";
+"llmSettings.retryFetch" = "Повторить запрос";
 
 "chat.messagePlaceholder" = "Спросите LocaLLM";

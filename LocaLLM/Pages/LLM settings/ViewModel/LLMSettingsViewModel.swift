@@ -39,7 +39,8 @@ extension LLMSettingsViewModel {
             state = .loading
 
             do {
-                let repsonse: LLMModelsResponse = try await networkService.request(urlString: urlString, method: .GET)
+                let requestUrl = urlString + "/api/tags"
+                let repsonse: LLMModelsResponse = try await networkService.request(urlString: requestUrl, method: .GET)
                 models = repsonse.models
                 state = .success(isModelsEmpty: repsonse.models.isEmpty)
 

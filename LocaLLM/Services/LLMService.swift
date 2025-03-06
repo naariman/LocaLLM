@@ -13,7 +13,12 @@ struct LLMService {
 
     var chatUrl: String? {
         guard let baseUrl: String = userDefaultsService.getValue(for: .llmUrl) else { return nil }
-        return baseUrl + "/chat"
+        return baseUrl + "/api/chat"
+    }
+
+    var modelName: String? {
+        guard let name: String = userDefaultsService.getValue(for: .llmName) else { return nil }
+        return name
     }
 
     func save(modelName: String, baseUrl: String) {

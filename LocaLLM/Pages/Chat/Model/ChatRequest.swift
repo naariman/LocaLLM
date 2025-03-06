@@ -8,7 +8,8 @@
 import Foundation
 
 struct ChatRequest: Encodable {
+
     var model: String
     var messages: [ChatMessage]
-    let stream: Bool = false
+    let stream: Bool = true
 }

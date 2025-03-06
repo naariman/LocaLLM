@@ -20,23 +20,20 @@ struct ChatView: View {
     var body: some View {
         NavigationStack {
             VStack {
-
                 ScrollViewReader { proxy in
-
                     List{
                         ForEach(viewModel.messages, id: \.self) { message in
-                            if message.role == .user {
-                                UserMessageRow(message: message)
-                                    .listRowSeparator(.hidden)
-                                    .listRowInsets(EdgeInsets(top: 16, leading: 0, bottom: 4, trailing: 0))
-                                    .id(message.id)
-                            }
-                            else {
-                                AssistantMessageRow(message: message)
-                                    .listRowSeparator(.hidden)
-                                    .listRowInsets(EdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 0))
-                                    .id(message.id)
-                            }
+                            MessageRow(message: message)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(
+                                    EdgeInsets(
+                                        top: viewModel.messages.first == message ? 0 : 16,
+                                        leading: 0,
+                                        bottom: message.role == .user ? 4 : 0,
+                                        trailing: 0
+                                    )
+                                )
+                                .id(message.id)
                         }
                     }
                     .scrollContentBackground(.hidden)

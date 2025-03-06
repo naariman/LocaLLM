@@ -8,5 +8,6 @@
 import Foundation
 
 struct ChatResponse: Decodable {
+    
     let message: ChatMessage
 }

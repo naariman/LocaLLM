@@ -30,7 +30,3 @@ struct ExapndedTextField: View {
         }
     }
 }
-
-#Preview {
-    ExapndedTextField(text: .constant(""))
-}

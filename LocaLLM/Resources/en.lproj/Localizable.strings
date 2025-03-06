@@ -23,5 +23,6 @@
 "llmSettings.empty.subtitle" = "It looks like there are no models to display. Please add a new model on your server and reenter URL.";
 "llmSettings.selectedModel" = "Selected model";
 "llmSettings.save" = "Save";
+"llmSettings.retryFetch" = "Retry fetch";
 
 "chat.messagePlaceholder" = "Message LocaLLM";

@@ -8,6 +8,7 @@
 import Foundation
 
 struct LLMModelsResponse: Decodable {
+
     let models: [LLMModel]
 }
 

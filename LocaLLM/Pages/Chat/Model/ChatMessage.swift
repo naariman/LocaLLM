@@ -8,9 +8,12 @@
 import Foundation
 
 struct ChatMessage: Codable, Hashable {
+
     var id = UUID()
     let role: ChatRole
     let content: String
+//    let done: String? = nil
+
 
     enum CodingKeys: String, CodingKey {
         case role, content
