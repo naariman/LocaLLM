@@ -49,7 +49,7 @@ struct ChatView: View {
                 ChatInputView(
                     text: $viewModel.message,
                     primaryButtonAction: {
-                        viewModel.sendMessage()
+                        viewModel.didTapSendMessage()
                     },
                     expandButtonAction: {
                         showExapndedTextField.toggle()

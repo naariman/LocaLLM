@@ -11,8 +11,7 @@ struct ChatMessage: Codable, Hashable {
 
     var id = UUID()
     let role: ChatRole
-    let content: String
-//    let done: String? = nil
+    var content: String
 
 
     enum CodingKeys: String, CodingKey {

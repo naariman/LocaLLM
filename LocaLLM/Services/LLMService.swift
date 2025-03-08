@@ -23,11 +23,10 @@ struct LLMService {
 
     func save(modelName: String, baseUrl: String) {
         var urlToSave = baseUrl
-        var modelNameToSave = modelName
 
         if baseUrl.last == "/" { urlToSave.removeLast() }
 
         userDefaultsService.set(value: urlToSave, for: .llmUrl)
-        userDefaultsService.set(value: modelNameToSave, for: .llmName)
+        userDefaultsService.set(value: modelName, for: .llmName)
     }
 }

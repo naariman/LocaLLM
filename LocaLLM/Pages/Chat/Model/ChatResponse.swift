@@ -10,4 +10,5 @@ import Foundation
 struct ChatResponse: Decodable {
     
     let message: ChatMessage
+    let done: Bool
 }
