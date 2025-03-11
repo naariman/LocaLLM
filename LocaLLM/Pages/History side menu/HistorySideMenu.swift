@@ -10,15 +10,11 @@ import SwiftUI
 struct HistorySideMenu: View {
 
     @Binding var isShowing: Bool
+    var edgeTransition: AnyTransition = .move(edge: .leading)
 
     var body: some View {
         ZStack {
-
-            if isShowing {
-                Color.black
-                    .opacity(0.3)
-                    .onTapGesture { isShowing.toggle() }
-            }
+            Color.white
 
             Form {
                 Text("some text")
@@ -26,8 +22,9 @@ struct HistorySideMenu: View {
                 Text("some text")
                 Text("some text")
             }
-            .transition(AnyTransition(.move(edge: .leading)))
-            .animation(.easeInOut, value: isShowing)
         }
+        .transition(edgeTransition)
+        .animation(.easeInOut, value: isShowing)
+        .scrollContentBackground(.hidden)
     }
 }

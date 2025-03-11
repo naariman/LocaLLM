@@ -14,7 +14,6 @@ class ChatViewModel: ObservableObject {
 
     private var chatNetworkService = ChatNetworkService()
     private var llmService = LLMService()
-    private var userDefaultsService = UserDefaultsService()
 
     private var urlString: String?
     private var requestData: ChatRequest
@@ -51,7 +50,7 @@ class ChatViewModel: ObservableObject {
 extension ChatViewModel: ChatNetworkServiceDelegate {
 
     func didAnswerWith(word: String) {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.messages[self.messages.count - 1].content += word
         }
     }

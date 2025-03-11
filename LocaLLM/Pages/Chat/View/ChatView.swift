@@ -12,50 +12,52 @@ struct ChatView: View {
     @StateObject var viewModel = ChatViewModel()
 
     @State private var showLLMSettingsView = false
-    @State private var showRightSideMenu = false
+    @State private var showHistorySideMenu = false
     @State private var showExapndedTextField = false
 
     @FocusState private var focusedField: FocusedField?
 
     var body: some View {
         NavigationStack {
-            VStack {
-                ScrollViewReader { proxy in
-                    List{
-                        ForEach(viewModel.messages, id: \.self) { message in
-                            MessageRow(message: message)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(
-                                    EdgeInsets(
-                                        top: viewModel.messages.first == message ? 0 : 16,
-                                        leading: 0,
-                                        bottom: message.role == .user ? 4 : 0,
-                                        trailing: 0
+            ZStack(alignment: .leading) {
+                VStack {
+                    ScrollViewReader { proxy in
+                        List{
+                            ForEach(viewModel.messages, id: \.self) { message in
+                                MessageRow(message: message)
+                                    .listRowSeparator(.hidden)
+                                    .listRowInsets(
+                                        EdgeInsets(
+                                            top: viewModel.messages.first == message ? 0 : 16,
+                                            leading: 0,
+                                            bottom: message.role == .user ? 4 : 0,
+                                            trailing: 0
+                                        )
                                     )
-                                )
-                                .id(message.id)
+                                    .id(message.id)
+                            }
+                        }
+                        .scrollContentBackground(.hidden)
+                        .onChange(of: viewModel.messages) {
+                            withAnimation {
+                                proxy.scrollTo(viewModel.messages.last?.id)
+                            }
                         }
                     }
-                    .scrollContentBackground(.hidden)
-                    .onChange(of: viewModel.messages) {
-                        withAnimation {
-                            proxy.scrollTo(viewModel.messages.last?.id)
+
+                    Spacer()
+
+                    ChatInputView(
+                        text: $viewModel.message,
+                        primaryButtonAction: {
+                            viewModel.didTapSendMessage()
+                        },
+                        expandButtonAction: {
+                            showExapndedTextField.toggle()
                         }
-                    }
+                    )
+                    .focused($focusedField, equals: .textField)
                 }
-
-                Spacer()
-
-                ChatInputView(
-                    text: $viewModel.message,
-                    primaryButtonAction: {
-                        viewModel.didTapSendMessage()
-                    },
-                    expandButtonAction: {
-                        showExapndedTextField.toggle()
-                    }
-                )
-                .focused($focusedField, equals: .textField)
             }
             .onTapGesture {
                 focusedField = nil
@@ -63,7 +65,9 @@ struct ChatView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        showRightSideMenu.toggle()
+                        withAnimation {
+                            showHistorySideMenu.toggle()
+                        }
                     }
                     label: {
                         Image(systemName: "line.3.horizontal")
