@@ -18,6 +18,7 @@ struct LocaLLMApp: App {
             ZStack {
                 ChatView()
                     .environmentObject(commonStore)
+                    .environment(\.locale, Locale(identifier: commonStore.languageKey))
 
                 if showLaunchPage {
                     LaunchView(showLaunchPage: $showLaunchPage)

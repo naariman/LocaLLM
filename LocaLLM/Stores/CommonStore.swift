@@ -11,5 +11,17 @@ class CommonStore: ObservableObject {
 
 //    var LLMSettings: LLMSettingsModel? = nil
 
+    private var userDefaults: UserDefaultsService
+
+    init() {
+        userDefaults = UserDefaultsService()
+    }
+
     var number = 1
+
+    var languageKey: String {
+        get {
+            userDefaults.getValue(for: .language) ?? Locale.current.identifier
+        }
+    }
 }

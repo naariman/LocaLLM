@@ -11,6 +11,8 @@
 "common.connectionAvailable" = "Соединение доступно";
 "common.connectionUnavailable" = "Соединение недоступно";
 "common.save" = "Сохранить";
+"common.delete" = "Удалить";
+"common.cancel" = "Отмена";
 
 "authorization.continueWithGoogleButton" = "Продолжить с Google";
 "authorization.continueWithAppleButton" = "Продолжить с Apple";
@@ -26,3 +28,11 @@
 "llmSettings.retryFetch" = "Повторить запрос";
 
 "chat.messagePlaceholder" = "Спросите LocaLLM";
+
+"appSettings.title" = "Настройки приложения";
+"appSettings.appLanguage" = "Язык Приложения";
+"appSettings.apearance" = "Цвет Приложения";
+"appSettings.apearance.light" = "Светлый";
+"appSettings.apearance.dark" = "Темный";
+"appSettings.clearChats" = "Очистить чаты";
+"appSettings.deleteChats.alert.message" = "Вы действительно хотите удалить историю чатов?";

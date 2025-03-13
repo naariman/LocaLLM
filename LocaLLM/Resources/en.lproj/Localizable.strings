@@ -11,6 +11,8 @@
 "common.connectionAvailable" = "Connected";
 "common.connectionUnavailable" = "Not connected";
 "common.save" = "Save";
+"common.delete" = "Delete";
+"common.cancel" = "Cancel";
 
 "authorization.continueWithGoogleButton" = "Continue with Google";
 "authorization.continueWithAppleButton" = "Continue with Apple";
@@ -26,3 +28,11 @@
 "llmSettings.retryFetch" = "Retry fetch";
 
 "chat.messagePlaceholder" = "Message LocaLLM";
+
+"appSettings.title" = "App settings";
+"appSettings.language" = "App Language";
+"appSettings.appearance" = "Color Scheme";
+"appSettings.appearance.light" = "Light";
+"appSettings.appearance.dark" = "Dark";
+"appSettings.clearChats" = "Clear chats";
+"appSettings.deleteChats.alert.message" = "Are you sure you want to delete chat history?";

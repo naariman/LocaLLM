@@ -19,7 +19,15 @@ struct ChatView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .leading) {
+            HStack {
+
+                if showHistorySideMenu {
+                    HistorySideMenu()
+                        .frame(width: 260)
+                        .transition(.move(edge: .leading))
+                }
+
+
                 VStack {
                     ScrollViewReader { proxy in
                         List{
@@ -58,41 +66,42 @@ struct ChatView: View {
                     )
                     .focused($focusedField, equals: .textField)
                 }
-            }
-            .onTapGesture {
-                focusedField = nil
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        withAnimation {
-                            showHistorySideMenu.toggle()
+                .onTapGesture {
+                    focusedField = nil
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            withAnimation {
+                                showHistorySideMenu.toggle()
+                            }
+                        }
+                        label: {
+                            Image(systemName: "line.3.horizontal")
+                                .tint(.black)
                         }
                     }
-                    label: {
-                        Image(systemName: "line.3.horizontal")
-                            .tint(.black)
+
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            showLLMSettingsView.toggle()
+                        }
+                        label: {
+                            Image(systemName: "globe")
+                                .tint(.black)
+                        }
                     }
+                }
+                .sheet(isPresented: $showLLMSettingsView) {
+                    LLMSettingsView()
+                }
+                .sheet(isPresented: $showExapndedTextField) {
+                    ExapndedTextField(text: $viewModel.message)
+                }
+                .onAppear {
+                    focusedField = .textField
                 }
 
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showLLMSettingsView.toggle()
-                    }
-                    label: {
-                        Image(systemName: "globe")
-                            .tint(.black)
-                    }
-                }
-            }
-            .sheet(isPresented: $showLLMSettingsView) {
-                LLMSettingsView()
-            }
-            .sheet(isPresented: $showExapndedTextField) {
-                ExapndedTextField(text: $viewModel.message)
-            }
-            .onAppear {
-                focusedField = .textField
             }
         }
     }
