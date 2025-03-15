@@ -9,6 +9,10 @@ import SwiftUI
 
 struct ChatView: View {
 
+    enum FocusedField {
+        case textField
+    }
+
     @StateObject var viewModel = ChatViewModel()
 
     @State private var showLLMSettingsView = false
@@ -18,19 +22,17 @@ struct ChatView: View {
     @FocusState private var focusedField: FocusedField?
 
     var body: some View {
-        NavigationStack {
-            HStack {
+        HStack {
+            if showHistorySideMenu {
+                HistorySideMenu()
+                    .frame(width: 260)
+                    .transition(.move(edge: .leading))
+            }
 
-                if showHistorySideMenu {
-                    HistorySideMenu()
-                        .frame(width: 260)
-                        .transition(.move(edge: .leading))
-                }
-
-
+            NavigationStack {
                 VStack {
                     ScrollViewReader { proxy in
-                        List{
+                        List {
                             ForEach(viewModel.messages, id: \.self) { message in
                                 MessageRow(message: message)
                                     .listRowSeparator(.hidden)
@@ -57,12 +59,9 @@ struct ChatView: View {
 
                     ChatInputView(
                         text: $viewModel.message,
-                        primaryButtonAction: {
-                            viewModel.didTapSendMessage()
-                        },
-                        expandButtonAction: {
-                            showExapndedTextField.toggle()
-                        }
+                        sendMessageButtonAction: { didTapSendMessageButton() },
+                        expandButtonAction: { showExapndedTextField = true },
+                        isRightButtonAvailable: !viewModel.message.isEmpty
                     )
                     .focused($focusedField, equals: .textField)
                 }
@@ -72,9 +71,7 @@ struct ChatView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button {
-                            withAnimation {
-                                showHistorySideMenu.toggle()
-                            }
+                            withAnimation { showHistorySideMenu = true }
                         }
                         label: {
                             Image(systemName: "line.3.horizontal")
@@ -92,26 +89,26 @@ struct ChatView: View {
                         }
                     }
                 }
-                .sheet(isPresented: $showLLMSettingsView) {
-                    ModelSettingsView()
-                }
+                .sheet(isPresented: $showLLMSettingsView) { ModelSettingsView() }
                 .sheet(isPresented: $showExapndedTextField) {
-                    ExapndedTextField(text: $viewModel.message)
+                    ExpandedChatInputView(
+                        text: $viewModel.message,
+                        condenseButtonAction: { showExapndedTextField = false },
+                        sendMessageButtonAction: { didTapSendMessageButton() },
+                        isRightButtonAvailable: !viewModel.message.isEmpty
+                    )
                 }
-                .onAppear {
-                    focusedField = .textField
-                }
-
+                .onAppear { focusedField = .textField }
             }
         }
     }
 }
 
+private extension ChatView {
 
-extension ChatView {
-
-    enum FocusedField {
-        case textField
+    func didTapSendMessageButton() {
+        showExapndedTextField = false
+        viewModel.didTapSendMessage()
     }
 }
 

@@ -11,5 +11,5 @@ struct ChatRequest: Encodable {
 
     var model: String
     var messages: [ChatMessage]
-    let stream: Bool = true
+    let stream: Bool
 }

@@ -5,7 +5,7 @@
 //  Created by rbkusser on 17.02.2025.
 //
 
-import Foundation
+import SwiftUI
 
 class ChatViewModel: ObservableObject {
 
@@ -20,7 +20,7 @@ class ChatViewModel: ObservableObject {
 
     init() {
         urlString = llmService.chatUrl
-        requestData = ChatRequest(model: llmService.modelName ?? "", messages: [])
+        requestData = ChatRequest(model: llmService.modelName ?? "", messages: [], stream: true)
         chatNetworkService.delegate = self
     }
 
