@@ -14,8 +14,8 @@ enum Appearance: String, CaseIterable {
 
     var displayName: LocalizedStringKey {
         switch self {
-        case .light: return LocalizedStringKey("appSettings.appearance.light")
-        case .dark: return LocalizedStringKey("appSettings.appearance.dark")
+        case .light: return "Light"
+        case .dark: return "Dark"
         }
     }
 }

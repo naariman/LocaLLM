@@ -32,14 +32,3 @@ struct LLMSettingsModelsList: View {
         .listStyle(.plain)
     }
 }
-
-#Preview {
-    @State var previewModels = [
-        LLMModel(name: "chat gpt", size: 100000),
-        LLMModel(name: "chat gpt 2 ", size: 100000),
-        LLMModel(name: "chat gpt 3", size: 100000),
-    ]
-    @State var previewSelectedModel = previewModels.first
-
-    LLMSettingsModelsList(models: $previewModels, selectedModel: $previewSelectedModel)
-}

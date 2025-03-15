@@ -14,11 +14,14 @@ struct LanguageSelectionRow: View {
     var body: some View {
         HStack {
             Image(systemName: "globe")
-            Picker(LocalizedStringKey("appSettings.language"), selection: $selectedLanguage) {
+            Picker("App Language", selection: $selectedLanguage) {
                 ForEach(Language.allCases, id: \.self) { language in
                     Text(language.displayName)
-                        .onTapGesture { selectedLanguage = language }
                 }
+            }
+            .onTapGesture {
+                let url = URL(string: UIApplication.openSettingsURLString)
+                UIApplication.shared.open(url!)
             }
         }
     }

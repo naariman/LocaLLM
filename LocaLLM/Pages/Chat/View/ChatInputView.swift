@@ -19,7 +19,7 @@ struct ChatInputView: View {
         VStack {
             Divider()
             TextField(text: $text, axis: .vertical) {
-                Text(LocalizedStringKey("chat.messagePlaceholder"))
+                Text("Message LocaLLM")
             }
             .padding(8)
             .lineLimit(9)

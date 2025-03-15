@@ -11,7 +11,7 @@ class AppSettingsViewModel: ObservableObject {
 
     @Published var selectedLanguage: Language = .english {
         didSet {
-
+            
         }
     }
 

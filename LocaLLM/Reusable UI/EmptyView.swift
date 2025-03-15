@@ -10,8 +10,8 @@ import SwiftUI
 struct EmptyView: View {
 
     let image: Image
-    let title: LocalizedStringKey
-    let subtitle: LocalizedStringKey
+    let title: String
+    let subtitle: String
 
     var body: some View {
         VStack(spacing: 16) {
@@ -38,7 +38,7 @@ struct EmptyView: View {
 #Preview {
     EmptyView(
         image: Image(systemName: "tray.fill"),
-        title: LocalizedStringKey("llmSettings.empty.title"),
-        subtitle: LocalizedStringKey("llmSettings.empty.subtitle")
+        title: "No Models Available",
+        subtitle: "It looks like there are no models to display. Please add a new model on your server and reenter URL."
     )
 }

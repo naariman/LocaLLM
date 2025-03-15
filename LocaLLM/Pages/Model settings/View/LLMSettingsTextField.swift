@@ -9,8 +9,6 @@ import SwiftUI
 
 struct LLMSettingsTextField: View {
 
-    let placeholder: LocalizedStringKey
-
     @Binding var text: String
     @Binding var state: LLMSettingsViewModel.State
 
@@ -18,7 +16,7 @@ struct LLMSettingsTextField: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            TextField(placeholder, text: $text)
+            TextField("httр://localhost:11434", text: $text)
                 .textContentType(.none)
                 .minimumScaleFactor(0.5)
                 .textInputAutocapitalization(.none)
@@ -76,7 +74,6 @@ struct LLMSettingsTextField: View {
 
 #Preview {
     LLMSettingsTextField(
-        placeholder: LocalizedStringKey("example"),
         text: .constant(""),
         state: .constant(.loading),
         onChange: {}

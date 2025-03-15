@@ -19,7 +19,7 @@ struct ExapndedTextField: View {
 
     var body: some View {
         VStack {
-            TextField(LocalizedStringKey("chat.messagePlaceholder"), text: $text, axis: .vertical)
+            TextField("Message LocaLLM", text: $text, axis: .vertical)
                 .focused($focusedField, equals: .textField)
                 .padding()
 

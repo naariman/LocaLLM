@@ -15,7 +15,7 @@ struct AppSettingsRow: View {
                 .font(.title3)
                 .foregroundStyle(.secondary)
 
-            Text(LocalizedStringKey("appSettings.title"))
+            Text("App Settings")
                 .font(.title3)
         }
     }

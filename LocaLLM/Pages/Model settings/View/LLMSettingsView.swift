@@ -14,25 +14,27 @@ struct LLMSettingsView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading) {
             LLMSettingsHeaderView(
-                title: LocalizedStringKey("llmSettings.title"),
-                subtitle: LocalizedStringKey("llmSettings.subtitle"),
-                closeButtonAction: { viewModel.didTapSave { dismiss() } }
+                closeButtonAction: {
+                    viewModel.didTapSave { dismiss() }
+                },
+                retryFetchingButtonAction: { viewModel.fetchModels() }
             )
+            .padding(.top, 8)
 
             LLMSettingsTextField(
-                placeholder: LocalizedStringKey("llmSettings.urlPlaceholder"),
                 text: $viewModel.urlString,
                 state: $viewModel.state,
                 onChange: viewModel.fetchModels
             )
+            .padding(.top, 32)
 
             if case .success(isModelsEmpty: true) = viewModel.state {
                 EmptyView(
                     image: Image(systemName: "tray.fill"),
-                    title: LocalizedStringKey("llmSettings.empty.title"),
-                    subtitle: LocalizedStringKey("llmSettings.empty.subtitle")
+                    title: "No Models Available",
+                    subtitle: "It looks like there are no models to display. Please add a new model on your server and reenter URL."
                 )
             }
 
@@ -42,9 +44,9 @@ struct LLMSettingsView: View {
 
             Spacer()
         }
-        .onAppear { viewModel.fetchModels() }
         .padding(.horizontal, 16)
         .padding(.top, 20)
+        .onAppear { viewModel.fetchModels() }
     }
 }
 
