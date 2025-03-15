@@ -1,5 +1,5 @@
 //
-//  LLMSettingsViewModel.swift
+//  ModelSettingsViewModel.swift
 //  LocaLLM
 //
 //  Created by rbkusser on 17.02.2025.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LLMSettingsViewModel: ObservableObject {
+class ModelSettingsViewModel: ObservableObject {
 
     enum State {
         case notEntered
@@ -17,14 +17,14 @@ class LLMSettingsViewModel: ObservableObject {
     }
 
     @Published var state: State = .loading
-    @Published var selectedModel: LLMModel? = nil
+    @Published var selectedModel: ModelInformation? = nil
     @Published var urlString: String
 
     private let userDefaultsService = UserDefaultsService()
     private let networkService = NetworkService()
     private let llmService = LLMService()
 
-    var models: [LLMModel] = []
+    var models: [ModelInformation] = []
 
     init() {
         urlString = userDefaultsService.getValue(for: .llmUrl) ?? ""
@@ -32,7 +32,7 @@ class LLMSettingsViewModel: ObservableObject {
     }
 }
 
-extension LLMSettingsViewModel {
+extension ModelSettingsViewModel {
 
     func fetchModels() {
         Task { @MainActor in
@@ -40,7 +40,7 @@ extension LLMSettingsViewModel {
 
             do {
                 let requestUrl = urlString + "/api/tags"
-                let repsonse: LLMModelsResponse = try await networkService.request(urlString: requestUrl, method: .GET)
+                let repsonse: ModelsList = try await networkService.request(urlString: requestUrl, method: .GET)
                 models = repsonse.models
                 state = .success(isModelsEmpty: repsonse.models.isEmpty)
 

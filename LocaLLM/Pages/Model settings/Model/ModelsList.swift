@@ -1,5 +1,5 @@
 //
-//  LLMModelsResponse.swift
+//  ModelsList.swift
 //  LocaLLM
 //
 //  Created by rbkusser on 19.02.2025.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct LLMModelsResponse: Decodable {
+struct ModelsList: Decodable {
 
-    let models: [LLMModel]
+    let models: [ModelInformation]
 }
 
-struct LLMModel: Decodable, Hashable, Identifiable {
+struct ModelInformation: Decodable, Hashable, Identifiable {
 
     var id: UUID
     var name: String

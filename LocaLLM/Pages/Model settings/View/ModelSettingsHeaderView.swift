@@ -1,5 +1,5 @@
 //
-//  LLMSettingsHeaderView.swift
+//  ModelSettingsHeaderView.swift
 //  LocaLLM
 //
 //  Created by rbkusser on 24.02.2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LLMSettingsHeaderView: View {
+struct ModelSettingsHeaderView: View {
 
     var closeButtonAction: () -> Void
     var retryFetchingButtonAction: () -> Void

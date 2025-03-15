@@ -1,5 +1,5 @@
 //
-//  LLMSettingsView.swift
+//  ModelSettingsView.swift
 //  LocaLLM
 //
 //  Created by rbkusser on 17.02.2025.
@@ -7,23 +7,23 @@
 
 import SwiftUI
 
-struct LLMSettingsView: View {
+struct ModelSettingsView: View {
 
-    @ObservedObject var viewModel = LLMSettingsViewModel()
+    @ObservedObject var viewModel = ModelSettingsViewModel()
 
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         VStack(alignment: .leading) {
-            LLMSettingsHeaderView(
+            ModelSettingsHeaderView(
                 closeButtonAction: {
                     viewModel.didTapSave { dismiss() }
                 },
                 retryFetchingButtonAction: { viewModel.fetchModels() }
             )
-            .padding(.top, 8)
+            .padding(.top, 24)
 
-            LLMSettingsTextField(
+            ModelSettingsPrimaryTextField(
                 text: $viewModel.urlString,
                 state: $viewModel.state,
                 onChange: viewModel.fetchModels
@@ -39,17 +39,16 @@ struct LLMSettingsView: View {
             }
 
             if case .success(isModelsEmpty: false) = viewModel.state {
-                LLMSettingsModelsList(models: $viewModel.models, selectedModel: $viewModel.selectedModel)
+                ModelsInformationList(models: $viewModel.models, selectedModel: $viewModel.selectedModel)
             }
 
             Spacer()
         }
         .padding(.horizontal, 16)
-        .padding(.top, 20)
         .onAppear { viewModel.fetchModels() }
     }
 }
 
 #Preview {
-    LLMSettingsView()
+    ModelSettingsView()
 }

@@ -93,7 +93,7 @@ struct ChatView: View {
                     }
                 }
                 .sheet(isPresented: $showLLMSettingsView) {
-                    LLMSettingsView()
+                    ModelSettingsView()
                 }
                 .sheet(isPresented: $showExapndedTextField) {
                     ExapndedTextField(text: $viewModel.message)

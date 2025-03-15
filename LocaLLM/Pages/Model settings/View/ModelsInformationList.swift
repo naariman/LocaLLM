@@ -1,5 +1,5 @@
 //
-//  LLMSettingsModelsList.swift
+//  ModelsInformationList.swift
 //  LocaLLM
 //
 //  Created by rbkusser on 24.02.2025.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct LLMSettingsModelsList: View {
+struct ModelsInformationList: View {
 
-    @Binding var models: [LLMModel]
-    @Binding var selectedModel: LLMModel?
+    @Binding var models: [ModelInformation]
+    @Binding var selectedModel: ModelInformation?
 
     var body: some View {
         List(models) { model in

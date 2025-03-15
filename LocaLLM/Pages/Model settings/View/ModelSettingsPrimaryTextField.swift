@@ -1,5 +1,5 @@
 //
-//  LLMSettingsTextField.swift
+//  ModelSettingsPrimaryTextField.swift
 //  LocaLLM
 //
 //  Created by rbkusser on 24.02.2025.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct LLMSettingsTextField: View {
+struct ModelSettingsPrimaryTextField: View {
 
     @Binding var text: String
-    @Binding var state: LLMSettingsViewModel.State
+    @Binding var state: ModelSettingsViewModel.State
 
     var onChange: () -> ()
 
@@ -58,7 +58,7 @@ struct LLMSettingsTextField: View {
     }
 
 
-    func borderColor(for state: LLMSettingsViewModel.State) -> Color {
+    func borderColor(for state: ModelSettingsViewModel.State) -> Color {
         switch state {
         case .loading:
             return .gray.opacity(0.3)
@@ -73,7 +73,7 @@ struct LLMSettingsTextField: View {
 }
 
 #Preview {
-    LLMSettingsTextField(
+    ModelSettingsPrimaryTextField(
         text: .constant(""),
         state: .constant(.loading),
         onChange: {}
