@@ -11,24 +11,37 @@ struct HistorySideMenu: View {
 
     @Environment(\.dismiss) var dismiss
 
+    @Binding var isShowing: Bool
+
     @State private var showProfileSettings = false
 
     var body: some View {
         ZStack {
-            Color.white
+            if isShowing {
+                Rectangle()
+                    .opacity(0.3)
+                    .ignoresSafeArea()
+                    .onTapGesture { isShowing = false }
 
-            VStack {
-                Spacer()
+                HStack {
+                    VStack {
+                        AppSettingsRow()
 
-                AppSettingsRow()
-                    .onTapGesture {
-                        showProfileSettings.toggle()
+                        Spacer()
                     }
+                    .padding()
+                    .frame(width: 270, alignment: .leading)
+                    .background(.white)
+
+                    Spacer()
+                }
             }
         }
-        .scrollContentBackground(.hidden)
-        .sheet(isPresented: $showProfileSettings) {
-            AppSettingsView()
-        }
+        .transition(.move(edge: .leading))
+        .animation(.easeInOut, value: isShowing)
     }
+}
+
+#Preview {
+    HistorySideMenu(isShowing: .constant(true))
 }

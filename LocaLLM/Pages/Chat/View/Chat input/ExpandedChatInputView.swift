@@ -31,7 +31,7 @@ struct ExpandedChatInputView: View {
 
             ZStack(alignment: .topLeading) {
                 if text.isEmpty {
-                    Text("Type a message...")
+                    Text("Message LocaLLM...")
                         .foregroundColor(Color.gray.opacity(0.7))
                         .padding(.horizontal, 16)
                         .padding(.vertical, 12)

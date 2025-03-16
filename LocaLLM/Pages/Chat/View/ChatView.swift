@@ -9,27 +9,17 @@ import SwiftUI
 
 struct ChatView: View {
 
-    enum FocusedField {
-        case textField
-    }
-
     @StateObject var viewModel = ChatViewModel()
 
-    @State private var showLLMSettingsView = false
+    @State private var showModelSettingsView = false
     @State private var showHistorySideMenu = false
     @State private var showExapndedTextField = false
 
-    @FocusState private var focusedField: FocusedField?
+    @FocusState private var isFocused: Bool
 
     var body: some View {
-        HStack {
-            if showHistorySideMenu {
-                HistorySideMenu()
-                    .frame(width: 260)
-                    .transition(.move(edge: .leading))
-            }
-
-            NavigationStack {
+        NavigationStack {
+            ZStack {
                 VStack {
                     ScrollViewReader { proxy in
                         List {
@@ -63,43 +53,44 @@ struct ChatView: View {
                         expandButtonAction: { showExapndedTextField = true },
                         isRightButtonAvailable: !viewModel.message.isEmpty
                     )
-                    .focused($focusedField, equals: .textField)
+                    .focused($isFocused)
                 }
-                .onTapGesture {
-                    focusedField = nil
-                }
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button {
-                            withAnimation { showHistorySideMenu = true }
-                        }
-                        label: {
-                            Image(systemName: "line.3.horizontal")
-                                .tint(.black)
-                        }
-                    }
 
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            showLLMSettingsView.toggle()
-                        }
-                        label: {
-                            Image(systemName: "globe")
-                                .tint(.black)
-                        }
+                HistorySideMenu(isShowing: $showHistorySideMenu)
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        showHistorySideMenu = true
+                    }
+                    label: {
+                        Image(systemName: "line.3.horizontal")
+                            .tint(.black)
                     }
                 }
-                .sheet(isPresented: $showLLMSettingsView) { ModelSettingsView() }
-                .sheet(isPresented: $showExapndedTextField) {
-                    ExpandedChatInputView(
-                        text: $viewModel.message,
-                        condenseButtonAction: { showExapndedTextField = false },
-                        sendMessageButtonAction: { didTapSendMessageButton() },
-                        isRightButtonAvailable: !viewModel.message.isEmpty
-                    )
+
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showModelSettingsView = true
+                    }
+                    label: {
+                        Image(systemName: "globe")
+                            .tint(.black)
+                    }
                 }
-                .onAppear { focusedField = .textField }
             }
+            .sheet(isPresented: $showModelSettingsView) { ModelSettingsView() }
+            .sheet(isPresented: $showExapndedTextField) {
+                ExpandedChatInputView(
+                    text: $viewModel.message,
+                    condenseButtonAction: { showExapndedTextField = false },
+                    sendMessageButtonAction: { didTapSendMessageButton() },
+                    isRightButtonAvailable: !viewModel.message.isEmpty
+                )
+            }
+            .onAppear { isFocused = true }
+            .onTapGesture { isFocused = false }
+            .toolbar(showHistorySideMenu ? .hidden : .visible, for: .navigationBar)
         }
     }
 }

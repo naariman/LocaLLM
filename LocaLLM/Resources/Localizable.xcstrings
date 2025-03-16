@@ -102,7 +102,6 @@
       }
     },
     "Message LocaLLM" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -111,6 +110,9 @@
           }
         }
       }
+    },
+    "Message LocaLLM..." : {
+
     },
     "Model settings" : {
       "localizations" : {
@@ -145,9 +147,6 @@
           }
         }
       }
-    },
-    "Type a message..." : {
-
     }
   },
   "version" : "1.0"

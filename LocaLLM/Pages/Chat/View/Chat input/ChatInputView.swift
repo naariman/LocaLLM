@@ -18,9 +18,9 @@ struct ChatInputView: View {
     var body: some View {
         VStack(spacing: 0) {
             Divider()
-                .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: -2)
+                .shadow(color: Color.black.opacity(0.3), radius: 3, x: 0, y: -2)
 
-            TextField("Type a message...", text: $text, axis: .vertical)
+            TextField("Message LocaLLM", text: $text, axis: .vertical)
                 .padding(.horizontal, 8)
                 .padding(.vertical, 8)
                 .lineLimit(1...9)
@@ -30,7 +30,7 @@ struct ChatInputView: View {
                 rightButtonAction: sendMessageButtonAction,
                 leftButtonSystemName: "arrow.up.left.and.arrow.down.right",
                 rightButtonSystemName: "paperplane.fill",
-                isRightButtonAvailable: true
+                isRightButtonAvailable: isRightButtonAvailable
             )
             .padding(8)
         }

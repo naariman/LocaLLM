@@ -31,16 +31,15 @@ struct ChatInputBar: View {
             Spacer()
 
             Button {
-                if isRightButtonAvailable {
-                    rightButtonAction()
-                }
+                if isRightButtonAvailable { rightButtonAction() }
             } label: {
                 Image(systemName: rightButtonSystemName)
                     .font(.system(size: 16, weight: .medium))
                     .frame(width: 32, height: 32)
                     .foregroundStyle(.white)
                     .background(Circle().fill(.black))
-                    .opacity( isRightButtonAvailable ? 1 : 0.3)
+                    .opacity(isRightButtonAvailable ? 1 : 0.3)
+                    .animation(.default, value: isRightButtonAvailable)
             }
         }
     }
