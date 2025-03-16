@@ -7,26 +7,26 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		9F362C462D60BE7300DBD437 /* LocaLLM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocaLLM.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F362C462D60BE7300DBD437 /* Ollama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ollama.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		9FE1176C2D65E02B009E0D13 /* Exceptions for "LocaLLM" folder in "LocaLLM" target */ = {
+		9FE1176C2D65E02B009E0D13 /* Exceptions for "Ollama" folder in "Ollama" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 9F362C452D60BE7300DBD437 /* LocaLLM */;
+			target = 9F362C452D60BE7300DBD437 /* Ollama */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		9F362C482D60BE7300DBD437 /* LocaLLM */ = {
+		9F362C482D60BE7300DBD437 /* Ollama */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				9FE1176C2D65E02B009E0D13 /* Exceptions for "LocaLLM" folder in "LocaLLM" target */,
+				9FE1176C2D65E02B009E0D13 /* Exceptions for "Ollama" folder in "Ollama" target */,
 			);
-			path = LocaLLM;
+			path = Ollama;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -45,7 +45,7 @@
 		9F362C3D2D60BE7300DBD437 = {
 			isa = PBXGroup;
 			children = (
-				9F362C482D60BE7300DBD437 /* LocaLLM */,
+				9F362C482D60BE7300DBD437 /* Ollama */,
 				9F362C5B2D60E95300DBD437 /* Frameworks */,
 				9F362C472D60BE7300DBD437 /* Products */,
 			);
@@ -54,7 +54,7 @@
 		9F362C472D60BE7300DBD437 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9F362C462D60BE7300DBD437 /* LocaLLM.app */,
+				9F362C462D60BE7300DBD437 /* Ollama.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -69,9 +69,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9F362C452D60BE7300DBD437 /* LocaLLM */ = {
+		9F362C452D60BE7300DBD437 /* Ollama */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9F362C542D60BE7400DBD437 /* Build configuration list for PBXNativeTarget "LocaLLM" */;
+			buildConfigurationList = 9F362C542D60BE7400DBD437 /* Build configuration list for PBXNativeTarget "Ollama" */;
 			buildPhases = (
 				9F362C422D60BE7300DBD437 /* Sources */,
 				9F362C432D60BE7300DBD437 /* Frameworks */,
@@ -82,13 +82,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				9F362C482D60BE7300DBD437 /* LocaLLM */,
+				9F362C482D60BE7300DBD437 /* Ollama */,
 			);
-			name = LocaLLM;
+			name = Ollama;
 			packageProductDependencies = (
 			);
 			productName = LocaLLM;
-			productReference = 9F362C462D60BE7300DBD437 /* LocaLLM.app */;
+			productReference = 9F362C462D60BE7300DBD437 /* Ollama.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -106,7 +106,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9F362C412D60BE7300DBD437 /* Build configuration list for PBXProject "LocaLLM" */;
+			buildConfigurationList = 9F362C412D60BE7300DBD437 /* Build configuration list for PBXProject "Ollama" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -123,7 +123,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9F362C452D60BE7300DBD437 /* LocaLLM */,
+				9F362C452D60BE7300DBD437 /* Ollama */,
 			);
 		};
 /* End PBXProject section */
@@ -277,11 +277,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"LocaLLM/Resources/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Ollama/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 532GA5V6NJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = LocaLLM/Info.plist;
+				INFOPLIST_FILE = Ollama/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Ollama;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -312,11 +314,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"LocaLLM/Resources/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Ollama/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = 532GA5V6NJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = LocaLLM/Info.plist;
+				INFOPLIST_FILE = Ollama/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Ollama;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -343,7 +347,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9F362C412D60BE7300DBD437 /* Build configuration list for PBXProject "LocaLLM" */ = {
+		9F362C412D60BE7300DBD437 /* Build configuration list for PBXProject "Ollama" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9F362C522D60BE7400DBD437 /* Debug */,
@@ -352,7 +356,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9F362C542D60BE7400DBD437 /* Build configuration list for PBXNativeTarget "LocaLLM" */ = {
+		9F362C542D60BE7400DBD437 /* Build configuration list for PBXNativeTarget "Ollama" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9F362C552D60BE7400DBD437 /* Debug */,

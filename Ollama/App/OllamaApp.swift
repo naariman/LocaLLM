@@ -1,5 +1,5 @@
 //
-//  LocaLLMApp.swift
+//  OllamaApp.swift
 //  LocaLLM
 //
 //  Created by rbkusser on 15.02.2025.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct LocaLLMApp: App {
+struct OllamaApp: App {
 
     @StateObject private var commonStore = CommonStore()
     @State private var showLaunchPage = true
