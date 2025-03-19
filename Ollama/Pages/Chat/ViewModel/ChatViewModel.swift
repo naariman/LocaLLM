@@ -7,20 +7,21 @@
 
 import SwiftUI
 
-class ChatViewModel: ObservableObject {
+class ChatViewModel: ObservableObject, ChatNetworkProtocol {
 
     @Published var message: String = ""
     @Published var messages: [ChatMessage] = []
 
     private var chatNetworkService = ChatNetworkService()
-    private var llmService = LLMService()
+    private var chatConversationLocalStorage = ChatConversationLocalStorage()
+    private var modelSettings = ModelService()
 
     private var urlString: String?
     private var requestData: ChatRequest
 
     init() {
-        urlString = llmService.chatUrl
-        requestData = ChatRequest(model: llmService.modelName ?? "", messages: [], stream: true)
+        urlString = modelSettings.chatUrl
+        requestData = ChatRequest(model: modelSettings.modelName ?? "", messages: [], stream: true)
         chatNetworkService.delegate = self
     }
 
@@ -53,5 +54,9 @@ extension ChatViewModel: ChatNetworkServiceDelegate {
         Task { @MainActor in
             self.messages[self.messages.count - 1].content += word
         }
+    }
+
+    func didMake(title: String) {
+
     }
 }

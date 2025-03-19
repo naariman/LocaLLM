@@ -18,14 +18,10 @@ enum NetworkError: Error {
 
     static func error(by statusCode: Int) -> NetworkError? {
         switch statusCode {
-        case (200...299):
-            return nil
-        case (400...499):
-            return .badRequest
-        case (500...599):
-            return .serverError
-        default:
-            return .unknown(message: "Unexpected status code: \(statusCode)")
+        case (200...299): return nil
+        case (400...499): return .badRequest
+        case (500...599): return .serverError
+        default: return .unknown(message: "Unexpected status code: \(statusCode)")
         }
     }
 }
@@ -40,16 +36,14 @@ struct NetworkService {
         urlString: String?,
         body: Encodable? = nil,
         method: NetworkMethod = .GET
-    ) async throws(NetworkError) -> T {
-        guard let urlString else { throw .urlError }
-        guard let url = URL(string: urlString) else { throw .urlError }
+    ) async throws -> T {
+        guard let urlString, let url = URL(string: urlString) else { throw NetworkError.urlError }
 
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
 
         if let body {
-
             do {
                 request.httpBody = try JSONEncoder().encode(body)
             } catch {
@@ -75,6 +69,60 @@ struct NetworkService {
         }
         catch {
             throw NetworkError.unknown(message: error.localizedDescription)
+        }
+    }
+
+    func requestWithStream<T: Decodable>(
+        urlString: String?,
+        body: Encodable? = nil,
+        method: NetworkMethod = .GET,
+        completion: @escaping (Result<T, NetworkError>) -> Void
+    ) {
+        guard let urlString, let url = URL(string: urlString) else {
+            completion(.failure(.urlError))
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+
+        if let body {
+            do {
+                request.httpBody = try JSONEncoder().encode(body)
+            } catch {
+                completion(.failure(.encodingError))
+                return
+            }
+        }
+
+        Task {
+            do {
+                let (stream, urlResponse) = try await URLSession.shared.bytes(for: request)
+                guard let httpResponse = urlResponse as? HTTPURLResponse else {
+                    completion(.failure(.unknown(message: "Invalid response type")))
+                    return
+                }
+                if let error = NetworkError.error(by: httpResponse.statusCode) {
+                    completion(.failure(error))
+                    return
+                }
+
+                for try await line in stream.lines {
+                    if let data = line.data(using: .utf8) {
+                        do {
+                            let decodedData = try JSONDecoder().decode(T.self, from: data)
+                            completion(.success(decodedData))
+                        } catch {
+                            completion(.failure(.decodingError))
+                        }
+                    }
+                }
+            } catch let networkError as NetworkError {
+                completion(.failure(networkError))
+            } catch {
+                completion(.failure(.unknown(message: error.localizedDescription)))
+            }
         }
     }
 }

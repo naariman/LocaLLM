@@ -13,7 +13,6 @@ struct ChatMessage: Codable, Hashable {
     let role: ChatRole
     var content: String
 
-
     enum CodingKeys: String, CodingKey {
         case role, content
     }

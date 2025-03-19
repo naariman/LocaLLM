@@ -8,6 +8,7 @@
 import Foundation
 
 struct ChatResponse: Decodable {
-    
+
+    var created_at: Date
     let message: ChatMessage
 }

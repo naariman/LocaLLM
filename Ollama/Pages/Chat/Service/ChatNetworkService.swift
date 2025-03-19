@@ -10,6 +10,7 @@ import Foundation
 protocol ChatNetworkServiceDelegate {
 
     func didAnswerWith(word: String)
+    func didMake(title: String)
 }
 
 struct ChatNetworkService {
@@ -49,5 +50,11 @@ struct ChatNetworkService {
         }
         catch let networkError as NetworkError { throw networkError }
         catch { throw NetworkError.unknown(message: error.localizedDescription) }
+    }
+
+    func title(requestData: ChatRequest, urlString: String) async throws(NetworkError) {
+        let userMessages = requestData.messages.filter({ $0.role == .user })
+        let requestData = ChatRequest(model: requestData.model, messages: userMessages, stream: false)
+        let promptToGetTitle = "Make conversation conclusion in 2-3 words"
     }
 }

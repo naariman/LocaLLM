@@ -22,7 +22,7 @@ class ModelSettingsViewModel: ObservableObject {
 
     private let userDefaultsService = UserDefaultsService()
     private let networkService = NetworkService()
-    private let llmService = LLMService()
+    private let modelService = ModelService()
 
     var models: [ModelInformation] = []
 
@@ -54,7 +54,7 @@ extension ModelSettingsViewModel {
 
     func didTapSave(completion: () -> ()) {
         guard let name = selectedModel?.name else { return }
-        llmService.save(modelName: name, baseUrl: urlString)
+        modelService.save(modelName: name, baseUrl: urlString)
         completion()
     }
 }

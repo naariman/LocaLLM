@@ -61,6 +61,7 @@ struct ChatView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
+                        isFocused = false
                         showHistorySideMenu = true
                     }
                     label: {

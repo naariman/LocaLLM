@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LLMService {
+struct ModelService {
 
     private var userDefaultsService = UserDefaultsService()
 
