@@ -1,15 +1,15 @@
-////
-////  ChatConversationLocalStorageModel.swift
-////  Ollama
-////
-////  Created by rbkusser on 17.03.2025.
-////
 //
-//import Foundation
-//import SwiftData
+//  ChatLocalStorageModel.swift
+//  Ollama
 //
+//  Created by rbkusser on 17.03.2025.
+//
+
+import Foundation
+import SwiftData
+
 //@Model
-//class ChatConversationLocalStorageModel {
+//class ChatLocalStorageModel {
 //
 //    var id: UUID
 //    var title: String

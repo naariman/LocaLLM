@@ -13,7 +13,6 @@ class UserDefaultsService {
 
         case llmUrl
         case llmName
-        case language
     }
 
     private let userDefaults = UserDefaults()

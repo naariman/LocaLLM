@@ -9,5 +9,9 @@ import Foundation
 
 class HistorySideMenuViewModel: ObservableObject {
 
+    private var baseNotificationManager = BaseNotificationManager()
 
+    func didTapNewChat() {
+        baseNotificationManager.trigger(notification: .newChatDidTap)
+    }
 }

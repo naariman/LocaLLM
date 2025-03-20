@@ -13,7 +13,7 @@ class ChatViewModel: ObservableObject, ChatNetworkProtocol {
     @Published var messages: [ChatMessage] = []
 
     private var chatNetworkService = ChatNetworkService()
-    private var chatConversationLocalStorage = ChatConversationLocalStorage()
+    private var chatLocalStorageService = ChatLocalStorageService()
     private var modelSettings = ModelService()
 
     private var urlString: String?
@@ -50,13 +50,28 @@ class ChatViewModel: ObservableObject, ChatNetworkProtocol {
 
 extension ChatViewModel: ChatNetworkServiceDelegate {
 
-    func didAnswerWith(word: String) {
+    func didAnswerWith(word: String, done: Bool) {
         Task { @MainActor in
             self.messages[self.messages.count - 1].content += word
+        }
+
+        if messages.count > 3 {
+            if done {
+                Task {
+                    do {
+                        try await chatNetworkService.title(
+                            requestData: requestData,
+                            urlString: urlString ?? ""
+                        )
+                    } catch {
+                        print("Failed to get title: \(error)")
+                    }
+                }
+            }
         }
     }
 
     func didMake(title: String) {
-
+        
     }
 }

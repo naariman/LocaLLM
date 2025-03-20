@@ -11,6 +11,8 @@ struct HistorySideMenu: View {
 
     @Environment(\.dismiss) var dismiss
 
+    @StateObject private var viewModel = HistorySideMenuViewModel()
+
     @Binding var isShowing: Bool
 
     @State private var showProfileSettings = false
@@ -25,8 +27,9 @@ struct HistorySideMenu: View {
 
                 HStack {
                     VStack {
-                        AppSettingsRow()
 
+                        NewChatRow()
+                            .onTapGesture { viewModel.didTapNewChat() }
                         Spacer()
                     }
                     .padding()
