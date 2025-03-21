@@ -6,21 +6,15 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct OllamaApp: App {
 
-    @State private var showLaunchPage = true
-
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                ChatView()
-
-                if showLaunchPage {
-                    LaunchView(showLaunchPage: $showLaunchPage)
-                }
-            }
+            ChatView()
         }
+        .modelContainer(for: ChatMessageLocal.self)
     }
 }

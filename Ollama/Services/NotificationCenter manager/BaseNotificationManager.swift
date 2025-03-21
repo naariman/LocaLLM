@@ -57,5 +57,6 @@ public class BaseNotification: RawRepresentable, Equatable {
 
 extension BaseNotification {
 
-    static var newChatDidTap: BaseNotification { .init() }
+    static var didTapNewChat: BaseNotification { .init() }
+    static var didSelectChat: BaseNotification { .init() }
 }

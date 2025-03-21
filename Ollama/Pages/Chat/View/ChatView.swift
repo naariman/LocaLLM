@@ -56,7 +56,7 @@ struct ChatView: View {
                     .focused($isFocused)
                 }
 
-                HistorySideMenu(isShowing: $showHistorySideMenu)
+                LeftSideMenuView(isShowing: $showHistorySideMenu)
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {

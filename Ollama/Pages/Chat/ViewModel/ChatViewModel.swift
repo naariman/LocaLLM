@@ -7,21 +7,26 @@
 
 import SwiftUI
 
-class ChatViewModel: ObservableObject, ChatNetworkProtocol {
+class ChatViewModel: ObservableObject {
+
+    @Environment(\.modelContext) var modelContext
 
     @Published var message: String = ""
     @Published var messages: [ChatMessage] = []
 
-    private var chatNetworkService = ChatNetworkService()
-    private var chatLocalStorageService = ChatLocalStorageService()
-    private var modelSettings = ModelService()
-
     private var urlString: String?
     private var requestData: ChatRequest
+
+    private var chatNetworkService = ChatNetworkService()
+    private let notifiacationService = BaseNotificationManager()
+    private var modelSettings = ModelService()
 
     init() {
         urlString = modelSettings.chatUrl
         requestData = ChatRequest(model: modelSettings.modelName ?? "", messages: [], stream: true)
+        notifiacationService.subscribe(to: .didTapNewChat)
+        notifiacationService.subscribe(to: .didSelectChat)
+        notifiacationService.delegate = self
         chatNetworkService.delegate = self
     }
 
@@ -73,5 +78,29 @@ extension ChatViewModel: ChatNetworkServiceDelegate {
 
     func didMake(title: String) {
         
+    }
+}
+
+extension ChatViewModel: BaseNotificationManagerDelegate {
+
+    func performOnTrigger(_ notification: BaseNotification, object: Any?, userInfo: [AnyHashable : Any]?) {
+        switch notification {
+        case .didTapNewChat:
+            didTapNewChat()
+        case .didSelectChat:
+            guard let id = object as? String else { return }
+            didSelectChat(with: id)
+            didTapNewChat()
+        default: break
+        }
+    }
+
+    private func didTapNewChat() {
+        requestData.messages.removeAll()
+        messages.removeAll()
+    }
+
+    private func didSelectChat(with id: String) {
+
     }
 }
