@@ -19,7 +19,7 @@ class ChatViewModel: ObservableObject {
 
     private var chatNetworkService = ChatNetworkService()
     private let notifiacationService = BaseNotificationManager()
-    private var modelSettings = ModelService()
+    private let modelSettings = ModelService()
 
     init() {
         urlString = modelSettings.chatUrl
@@ -100,7 +100,5 @@ extension ChatViewModel: BaseNotificationManagerDelegate {
         messages.removeAll()
     }
 
-    private func didSelectChat(with id: String) {
-
-    }
+    private func didSelectChat(with id: String) {}
 }

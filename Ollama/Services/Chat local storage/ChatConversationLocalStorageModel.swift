@@ -65,15 +65,6 @@ enum TimePeriod: Int, Codable, CaseIterable {
 
         self = .later
     }
-
-    var displayName: String {
-        switch self {
-        case .today: return "Today"
-        case .lastSevenDays: return "Last seven days"
-        case .lastMonth: return "Last month"
-        case .later: return "Later"
-        }
-    }
 }
 
 @Model
