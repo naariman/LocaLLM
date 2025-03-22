@@ -22,12 +22,11 @@ class ModelSettingsViewModel: ObservableObject {
 
     private let userDefaultsService = UserDefaultsService()
     private let networkService = NetworkService()
-    private let modelService = ModelService()
 
     var models: [ModelInformation] = []
 
     init() {
-        urlString = userDefaultsService.getValue(for: .llmUrl) ?? ""
+        urlString = userDefaultsService.getValue(for: .modelBaseUrl) ?? ""
         fetchModels()
     }
 }
@@ -39,12 +38,12 @@ extension ModelSettingsViewModel {
             state = .loading
 
             do {
-                let requestUrl = urlString + "/api/tags"
+                let requestUrl = urlString + Constants.tagsUrl
                 let repsonse: ModelsList = try await networkService.request(urlString: requestUrl, method: .GET)
                 models = repsonse.models
                 state = .success(isModelsEmpty: repsonse.models.isEmpty)
 
-                let savedModelName: String? = userDefaultsService.getValue(for: .llmName)
+                let savedModelName: String? = userDefaultsService.getValue(for: .modelName)
                 selectedModel = models.first(where: { $0.name == savedModelName })
             } catch {
                 state = .failure
@@ -54,7 +53,8 @@ extension ModelSettingsViewModel {
 
     func didTapSave(completion: () -> ()) {
         guard let name = selectedModel?.name else { return }
-        modelService.save(modelName: name, baseUrl: urlString)
+        userDefaultsService.set(value: name, for: .modelName)
+        userDefaultsService.set(value: urlString, for: .modelBaseUrl)
         completion()
     }
 }

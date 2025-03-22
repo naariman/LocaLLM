@@ -16,7 +16,7 @@ struct ModelSettingsPrimaryTextField: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            TextField("httр://localhost:11434", text: $text)
+            TextField("Enter base URL", text: $text)
                 .textContentType(.none)
                 .minimumScaleFactor(0.5)
                 .textInputAutocapitalization(.none)

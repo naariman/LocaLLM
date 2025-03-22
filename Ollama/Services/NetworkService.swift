@@ -42,6 +42,7 @@ enum NetworkMethod: String {
 }
 
 struct NetworkLogger {
+
     private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.app.networking", category: "NetworkService")
 
     static func log(request: URLRequest) {
@@ -84,6 +85,7 @@ struct NetworkLogger {
 }
 
 struct NetworkService {
+
     func request<T: Decodable>(
         urlString: String?,
         body: Encodable? = nil,

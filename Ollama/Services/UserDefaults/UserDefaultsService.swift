@@ -11,8 +11,8 @@ class UserDefaultsService {
 
     enum Key: String {
 
-        case llmUrl
-        case llmName
+        case modelBaseUrl
+        case modelName
     }
 
     private let userDefaults = UserDefaults()

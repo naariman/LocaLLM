@@ -9,6 +9,32 @@ import Foundation
 import SwiftData
 
 @Model
+class ChatsLocalStorageModel {
+
+    var chats: [ChatLocalStorageModel]
+
+    init(chats: [ChatLocalStorageModel]) {
+        self.chats = chats
+    }
+
+    var todayChats: [ChatLocalStorageModel] {
+        chats.filter { $0.timeGroup == .today }
+    }
+
+    var lastSevenDaysChats: [ChatLocalStorageModel] {
+        chats.filter { $0.timeGroup == .lastSevenDays }
+    }
+
+    var lastMonthChats: [ChatLocalStorageModel] {
+        chats.filter { $0.timeGroup == .lastMonth }
+    }
+
+    var laterChats: [ChatLocalStorageModel] {
+        chats.filter { $0.timeGroup == .later }
+    }
+}
+
+@Model
 class ChatLocalStorageModel {
 
     var id: UUID

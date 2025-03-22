@@ -9,48 +9,28 @@ import SwiftUI
 
 struct HistoryList: View {
 
-    @Binding var chats: [ChatLocalStorageModel]
+    @Binding var chatStorage: ChatsLocalStorageModel
     var didTap: (String) -> ()
 
     var body: some View {
         VStack(alignment: .leading) {
+            chatSection(title: "Today", chats: chatStorage.todayChats)
+            chatSection(title: "Last seven days", chats: chatStorage.lastSevenDaysChats)
+            chatSection(title: "Last month", chats: chatStorage.lastMonthChats)
+            chatSection(title: "Later", chats: chatStorage.laterChats)
+        }
+        .frame(maxWidth: .infinity)
+    }
 
-            if !chats.filter({ $0.timeGroup == .today }).isEmpty {
-                Section(header: Text("Today")) {
-                    ForEach(chats.filter { $0.timeGroup == .today }) { chat in
-                        Text(chat.title)
-                            .onTapGesture { didTap(chat.id.description) }
-                    }
-                }
-            }
-
-            if !chats.filter({ $0.timeGroup == .lastSevenDays }).isEmpty {
-                Section(header: Text("Last seven days")) {
-                    ForEach(chats.filter { $0.timeGroup == .lastSevenDays }) { chat in
-                        Text(chat.title)
-                            .onTapGesture { didTap(chat.id.description) }
-                    }
-                }
-            }
-
-            if !chats.filter({ $0.timeGroup == .lastMonth }).isEmpty {
-                Section(header: Text("Last month")) {
-                    ForEach(chats.filter { $0.timeGroup == .lastMonth }) { chat in
-                        Text(chat.title)
-                            .onTapGesture { didTap(chat.id.description) }
-                    }
-                }
-            }
-
-            if !chats.filter({ $0.timeGroup == .later }).isEmpty {
-                Section(header: Text("Later")) {
-                    ForEach(chats.filter { $0.timeGroup == .later }) { chat in
-                        Text(chat.title)
-                            .onTapGesture { didTap(chat.id.description) }
-                    }
+    @ViewBuilder
+    private func chatSection(title: String, chats: [ChatLocalStorageModel]) -> some View {
+        if !chats.isEmpty {
+            Section(header: Text(title)) {
+                ForEach(chats) { chat in
+                    Text(chat.title)
+                        .onTapGesture { didTap(chat.id.description) }
                 }
             }
         }
-        .frame(maxWidth: .infinity)
     }
 }

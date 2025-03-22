@@ -15,6 +15,6 @@ struct OllamaApp: App {
         WindowGroup {
             ChatView()
         }
-        .modelContainer(for: ChatLocalStorageModel.self)
+        .modelContainer(for: ChatsLocalStorageModel.self)
     }
 }

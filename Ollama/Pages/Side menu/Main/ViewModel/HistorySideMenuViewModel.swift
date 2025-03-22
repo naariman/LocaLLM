@@ -9,7 +9,7 @@ import Foundation
 
 class LeftSideMenuViewModel: ObservableObject {
 
-    @Published var chats: [ChatLocalStorageModel] = []
+    @Published var chats = ChatsLocalStorageModel(chats: [])
     private var baseNotificationManager = BaseNotificationManager()
 
 }

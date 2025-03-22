@@ -22,7 +22,7 @@ struct LeftSideMenuView: View {
 
                 HStack {
                     VStack {
-                        HistoryList(chats: $viewModel.chats) { id in
+                        HistoryList(chatStorage: $viewModel.chats) { id in
                             viewModel.didSelectChat(with: id)
                         }
                         Spacer()

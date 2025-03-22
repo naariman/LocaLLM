@@ -14,16 +14,22 @@ class ChatViewModel: ObservableObject {
     @Published var message: String = ""
     @Published var messages: [ChatMessage] = []
 
-    private var urlString: String?
+    private var chatUrlString: String?
     private var requestData: ChatRequest
 
     private var chatNetworkService = ChatNetworkService()
     private let notifiacationService = BaseNotificationManager()
-    private let modelSettings = ModelService()
+    private let userDefaultsService = UserDefaultsService()
 
     init() {
-        urlString = modelSettings.chatUrl
-        requestData = ChatRequest(model: modelSettings.modelName ?? "", messages: [], stream: true)
+        if let baseUrl: String = userDefaultsService.getValue(for: .modelBaseUrl) {
+            chatUrlString = baseUrl + Constants.chatUrl
+        }
+        requestData = ChatRequest(
+            model: userDefaultsService.getValue(for: .modelName) ?? "",
+            messages: [],
+            stream: true
+        )
         notifiacationService.subscribe(to: .didTapNewChat)
         notifiacationService.subscribe(to: .didSelectChat)
         notifiacationService.delegate = self
@@ -31,7 +37,7 @@ class ChatViewModel: ObservableObject {
     }
 
     func didTapSendMessage() {
-        guard let urlString else { return }
+        guard let chatUrlString else { return }
 
         Task { @MainActor in
             let userMessage = ChatMessage(role: .user, content: message)
@@ -45,7 +51,7 @@ class ChatViewModel: ObservableObject {
             messages.append(assistantMessage)
 
             do {
-                try await chatNetworkService.sendMessage(requestData: requestData, urlString: urlString)
+                try await chatNetworkService.getMessage(requestData: requestData, urlString: chatUrlString)
             } catch {
                 print("Error: \(error)")
             }
@@ -64,10 +70,7 @@ extension ChatViewModel: ChatNetworkServiceDelegate {
             if done {
                 Task {
                     do {
-                        try await chatNetworkService.title(
-                            requestData: requestData,
-                            urlString: urlString ?? ""
-                        )
+                        try await chatNetworkService.getTitle(requestData: requestData, urlString: chatUrlString ?? "")
                     } catch {
                         print("Failed to get title: \(error)")
                     }
@@ -76,9 +79,7 @@ extension ChatViewModel: ChatNetworkServiceDelegate {
         }
     }
 
-    func didMake(title: String) {
-        
-    }
+    func didMake(title: String) {}
 }
 
 extension ChatViewModel: BaseNotificationManagerDelegate {
@@ -90,7 +91,9 @@ extension ChatViewModel: BaseNotificationManagerDelegate {
         case .didSelectChat:
             guard let id = object as? String else { return }
             didSelectChat(with: id)
-            didTapNewChat()
+        case .didUpdateModelSettings:
+            chatUrlString = (userDefaultsService.getValue(for: .modelBaseUrl) ?? "") + Constants.chatUrl
+            requestData.model = userDefaultsService.getValue(for: .modelName) ?? ""
         default: break
         }
     }
@@ -100,5 +103,6 @@ extension ChatViewModel: BaseNotificationManagerDelegate {
         messages.removeAll()
     }
 
-    private func didSelectChat(with id: String) {}
+    private func didSelectChat(with id: String) {
+    }
 }

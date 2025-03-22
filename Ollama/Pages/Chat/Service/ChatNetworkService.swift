@@ -18,7 +18,7 @@ struct ChatNetworkService {
     private var networkService = NetworkService()
     var delegate: ChatNetworkServiceDelegate?
 
-    func sendMessage(requestData: ChatRequest, urlString: String) async throws {
+    func getMessage(requestData: ChatRequest, urlString: String) async throws {
         guard let url = URL(string: urlString) else {
             NetworkLogger.log(error: NetworkError.urlError)
             throw NetworkError.urlError
@@ -79,7 +79,7 @@ struct ChatNetworkService {
         }
     }
 
-    func title(requestData: ChatRequest, urlString: String) async throws {
+    func getTitle(requestData: ChatRequest, urlString: String) async throws {
         var requestData = ChatRequest(
             model: requestData.model,
             messages: requestData.messages,
